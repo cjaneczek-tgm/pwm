@@ -55,7 +55,7 @@ int main(void)
 	// Initialize the console output
 	InitConsole();
 
-	// Initialize the InterruptServiceRoutine
+	// Initialize the Interrupt-Service-Routine
 	InitISR();
 
 	while (1)
@@ -79,12 +79,12 @@ void InitPWM(void)
 	ROM_SysCtlPWMClockSet(SYSCTL_PWMDIV_1);
 
 	/*
-	 * Enable the port for the leds
+	 * Enable the port for the LED
 	 */
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 
 	/*
-	 * Enable the PWM1 Genatator
+	 * Enable the PWM1 Generator
 	 */
 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
 
@@ -164,7 +164,8 @@ void IntButtonHandler(void)
 {
 
 	GPIOIntClear(BUTTONS_GPIO_BASE, ALL_BUTTONS);
-	PWMOutputState(PWM1_BASE, outbit, true); // enable the output state for the pwm signal
+	//Enabling the Output State for the PWM-signal
+	PWMOutputState(PWM1_BASE, outbit, true);
 
 	switch(cycle)
 	{
@@ -176,9 +177,9 @@ void IntButtonHandler(void)
 			break;
 		
 		case 1:
-			//setting the duty cycle on 50%
-			PWMPulseWidthSet(PWM1_BASE, out, 2499);
 			cycle++;
+			//setting the duty cycle on 50%
+			PWMPulseWidthSet(PWM1_BASE, out, 2499);			
 			UARTprintf("Cycle: %i Intensity: 50%%\n", cycle);
 			break;
 
@@ -190,6 +191,7 @@ void IntButtonHandler(void)
 			break;
 
 		case 3:
+			cycle++;
 			//setting the duty cycle on 100%
 			PWMPulseWidthSet(PWM1_BASE, out, 4999);
 			UARTprintf("Cycle: %i Intensity: 100%%\n", cycle);
